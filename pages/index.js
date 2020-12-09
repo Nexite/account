@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import merge from 'deepmerge';
-import Text, { Heading } from '@codeday/topo/Text';
-import Box from '@codeday/topo/Box';
-import Button from '@codeday/topo/Button';
-import Divider from '@codeday/topo/Divider';
-import Alert, { Title as AlertTitle, Icon as AlertIcon } from '@codeday/topo/Alert';
+import Text, { Heading } from '@codeday/topo/Atom/Text';
+import Box from '@codeday/topo/Atom/Box';
+import Button from '@codeday/topo/Atom/Button';
 import WavingHand from '@codeday/topocons/Emoji/People/WavingHand';
 import SubmitUpdates from '../components/SubmitUpdates';
 import Page from '../components/Page';
@@ -14,10 +12,13 @@ import ProfileBlocks from '../components/ProfileBlocks';
 import loginApi from '../lib/login';
 import refreshUser from '../utils/refresh-user';
 import { getSites } from '../utils/contentful';
+import { IndexQuery } from './index.gql';
+import { apiFetch } from '@codeday/topo/utils';
+import { print } from 'graphql';
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await loginApi.getSession(req);
-
+  
   if (!session || !session.user) {
     res.writeHead(302, {
       Location: '/api/login',
@@ -25,12 +26,12 @@ export const getServerSideProps = async ({ req, res }) => {
     res.end();
     return { props: {} };
   }
-
   const user = await refreshUser(session.user.sub);
-
+  var query = await apiFetch(print(IndexQuery), {username: user.username})
   return {
     props: {
       user,
+      query,
       sites: await getSites([
         'Student',
         (user.roles.volunteer || user.roles.staff) && 'Volunteer',
@@ -41,10 +42,10 @@ export const getServerSideProps = async ({ req, res }) => {
   };
 };
 
-const User = ({ user, sites }) => {
-  const [error, setError] = useState();
+const User = ({ user, query, sites }) => {
   const [request, setRequest] = useState({});
   return (
+    <>
     <Page isLoggedIn>
       <Head>
         <title>CodeDay Account</title>
@@ -91,22 +92,18 @@ const User = ({ user, sites }) => {
           </Button>
         ))}
       </Box>
-      <Divider />
+      {/* <Divider /> */}
       <Heading as="h2" size="lg" paddingTop={4}>Update Your Account</Heading>
-      {error && (
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle>{error}</AlertTitle>
-        </Alert>
-      )}
       <ProfileBlocks
         user={merge(user, request)}
+        query={query}
         fields={[
           'username',
           'picture',
           'given_name',
           'family_name',
           'user_metadata.display_name_format',
+          'badges',
           'user_metadata.pronoun',
           'user_metadata.phone_number',
           'user_metadata.bio',
@@ -120,7 +117,6 @@ const User = ({ user, sites }) => {
           required={['username', 'given_name', 'family_name', 'user_metadata.pronoun']}
           user={user}
           request={request}
-          onError={setError}
         />
         <Box marginTop="3">
           <Button
@@ -153,6 +149,7 @@ const User = ({ user, sites }) => {
         </Box>
       </Box>
     </Page>
+    </>
   );
 };
 User.propTypes = {

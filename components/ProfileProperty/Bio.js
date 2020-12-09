@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Textarea from '@codeday/topo/Input/Textarea';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
+import Textarea from '@codeday/topo/Atom/Input/Textarea';
+import FormControl, { Label, HelpText } from '../FormControl';
 
 const Bio = ({ user, onChange }) => {
   const [bio, setBio] = useState(user.user_metadata.bio);
@@ -13,7 +13,7 @@ const Bio = ({ user, onChange }) => {
         value={bio}
         onChange={(e) => {
           setBio(e.target.value);
-          onChange({ user_metadata: { bio: e.target.value } });
+          onChange({ user: { user_metadata: { bio: e.target.value } }});
         }}
       />
       <HelpText>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Input from '@codeday/topo/Input/Text';
-import Button from '@codeday/topo/Button';
-import Collapse from '@codeday/topo/Collapse';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
+import Input from '@codeday/topo/Atom/Input/Text';
+import Button from '@codeday/topo/Atom/Button';
+import Collapse from '@chakra-ui/core/dist/Collapse';
+import FormControl, { Label, HelpText } from '../FormControl';
 
 const Volunteer = ({ user, onChange }) => {
   const [isVisible, setIsVisible] = useState(false);

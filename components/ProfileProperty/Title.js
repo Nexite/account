@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Input from '@codeday/topo/Input/Text';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
+import Input from '@codeday/topo/Atom/Input/Text';
+import FormControl, { Label, HelpText } from '../FormControl';
 
 const Title = ({ user, onChange }) => {
   const [title, setTitle] = useState(user.user_metadata.title || 'Volunteer');
@@ -13,7 +13,7 @@ const Title = ({ user, onChange }) => {
         value={title}
         onChange={(e) => {
           setTitle(e.target.value);
-          onChange({ user_metadata: { title: e.target.value } });
+          onChange({ user: { user_metadata: { title: e.target.value } } });
         }}
       />
       <HelpText>

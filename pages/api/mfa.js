@@ -10,6 +10,5 @@ export default async (req, res) => {
       else resolve(data);
     });
   });
-  console.log(ticket);
   res.writeHead(302, { Location: ticket.ticket_url }).send(ticket.ticket_url);
 };

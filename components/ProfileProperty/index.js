@@ -3,16 +3,17 @@ import Bio from './Bio';
 import Name from './Name';
 import Phone from './Phone';
 import Title from './Title';
+import Badges from './Badges';
 import Picture from './Picture';
 import Pronoun from './Pronoun';
 import Username from './Username';
 import Volunteer from './Volunteer';
-import DisplayName from './DisplayName';
+import DisplayName from './DisplayName'
 
 export {
-  CodeOfConduct, Name, Phone, Picture, Pronoun, Username, Volunteer, DisplayName, Title, Bio,
+  CodeOfConduct, Name, Phone, Picture, Pronoun, Username, Volunteer, DisplayName, Badges, Title, Bio,
 };
-const allExports = [CodeOfConduct, Name, Phone, Picture, Pronoun, Username, Volunteer, DisplayName, Title, Bio];
+const allExports = [CodeOfConduct, Name, Phone, Picture, Pronoun, Username, Volunteer, DisplayName, Badges, Title, Bio];
 
 export default (fields) => {
   let seenProviders = [];

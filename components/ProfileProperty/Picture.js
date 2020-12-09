@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import Image from '@codeday/topo/Image';
-import Spinner from '@codeday/topo/Spinner';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
+import Image from '@codeday/topo/Atom/Image';
+import Spinner from '@codeday/topo/Atom/Spinner';
+import FormControl, { Label, HelpText } from '../FormControl';
 
 const uploadPicture = async (files) => {
   const formData = new FormData();

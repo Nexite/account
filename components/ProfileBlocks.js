@@ -1,13 +1,18 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import merge from 'deepmerge';
-import Box from '@codeday/topo/Box';
+import Box from '@codeday/topo/Atom/Box';
 import getPropertyComponents from './ProfileProperty';
 
-const ProfileBlocks = ({ user, fields, onChange }) => {
+const ProfileBlocks = ({ user, query, fields, onChange }) => {
   const [components, setComponents] = useState([]);
   const [_, dispatchChange] = useReducer((state, change) => {
-    const merged = merge(state, change);
+    let merged = merge(state, change);
+    if (change.query) {
+      if (change.query.badges) {
+        merged.query.badges = change.query.badges
+      }
+    }
     onChange(merged);
     return merged;
   }, {});
@@ -23,6 +28,7 @@ const ProfileBlocks = ({ user, fields, onChange }) => {
               {
                 React.createElement(component, {
                   user,
+                  query,
                   onChange: dispatchChange,
                 })
               }
@@ -36,6 +42,7 @@ const ProfileBlocks = ({ user, fields, onChange }) => {
 };
 ProfileBlocks.propTypes = {
   user: PropTypes.object,
+  query: PropTypes.object,
   fields: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func,
 };

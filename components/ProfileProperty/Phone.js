@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Text from '@codeday/topo/Text';
-import Input from '@codeday/topo/Input/Text';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
+import Text from '@codeday/topo/Atom/Text';
+import Input from '@codeday/topo/Atom/Input/Text';
+import FormControl, { Label, HelpText } from '../FormControl';
 
 const Phone = ({ user, onChange }) => {
   const [phoneNumber, setPhoneNumber] = useState(user.user_metadata.phone_number);
@@ -14,7 +14,7 @@ const Phone = ({ user, onChange }) => {
         value={phoneNumber}
         onChange={(e) => {
           setPhoneNumber(e.target.value);
-          onChange({ user_metadata: { phone_number: e.target.value } });
+          onChange({ user: { user_metadata: { phone_number: e.target.value } } });
         }}
       />
       <HelpText>

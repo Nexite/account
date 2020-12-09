@@ -1,0 +1,5 @@
+#import "../components/ProfileProperty/Badges.gql"
+
+query IndexQuery ($username: String) {
+  ...IndexBadgesComponent
+}

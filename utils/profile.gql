@@ -1,0 +1,5 @@
+mutation EditDisplayedBadgesMutation ($username: String!, $badges: [AccountUserBadgeInput]!) {
+  account {
+    setDisplayedBadges(username: $username, badges: $badges)
+  }
+}

@@ -1,0 +1,21 @@
+fragment IndexBadgesComponent on Query {
+  account{
+    user: getUser(where: {username: $username}, fresh: true) {
+      username
+			discordInformation {
+        username
+        discriminator
+        avatar
+      }
+      badges {
+        id
+        displayed
+        order
+        details {
+          name
+          emoji
+        }
+      }
+    }
+  }
+}

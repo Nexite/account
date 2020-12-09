@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Checkbox from '@codeday/topo/Input/Checkbox';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
-import Text, { Link } from '@codeday/topo/Text';
-import List, { Item } from '@codeday/topo/List';
+import Checkbox from '@codeday/topo/Atom/Input/Checkbox';
+import FormControl, { Label, HelpText } from '../FormControl';
+import Text, { Link } from '@codeday/topo/Atom/Text';
+import List, { Item } from '@codeday/topo/Atom/List';
 
 const CodeOfConduct = ({ user, onChange }) => {
   const [checked, setChecked] = useState(user.user_metadata.accept_tos);
@@ -25,7 +25,7 @@ const CodeOfConduct = ({ user, onChange }) => {
         marginTop={3}
         onChange={(e) => {
           setChecked(e.target.checked);
-          onChange({ user_metadata: { accept_tos: e.target.checked } });
+          onChange({ user: { user_metadata: { accept_tos: e.target.checked } } });
         }}
         isDisabled={user.user_metadata.accept_tos}
         isChecked={checked}

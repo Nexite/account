@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from '@codeday/topo/Box';
-import Radio, { Group } from '@codeday/topo/Input/Radio';
-import FormControl, { Label } from '@codeday/topo/FormControl';
+import { Grid } from '@codeday/topo/Atom/Box';
+import Radio, { Group } from '@codeday/topo/Atom/Input/Radio';
+import FormControl, { Label } from '../FormControl';
 
 const Name = ({ user, onChange }) => {
   const [displayNameFormat, setDisplayNameFormat] = useState(user.user_metadata.display_name_format);
@@ -15,7 +15,7 @@ const Name = ({ user, onChange }) => {
           value={displayNameFormat}
           onChange={(e) => {
             setDisplayNameFormat(e.target.value);
-            onChange({ user_metadata: { display_name_format: e.target.value } });
+            onChange({ user: { user_metadata: { display_name_format: e.target.value } } });
           }}
         >
           <Radio value="initials">

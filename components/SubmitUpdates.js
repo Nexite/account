@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import merge from 'deepmerge';
-import Button from '@codeday/topo/Button';
+import Button from '@codeday/topo/Atom/Button';
+import { useToasts } from '@codeday/topo/utils';
 import { updateUserProfile } from '../utils/profile';
+import { tryAuthenticatedApiQuery } from '../utils/api';
+import { EditDisplayedBadgesMutation } from '../utils/profile.gql';
 
 const hasRequired = (required, user, request) => {
   const merged = merge(user, request);
@@ -21,6 +24,7 @@ const SubmitUpdates = ({
   required, user, request, token, onError, onSubmit,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { error } = useToasts();
   return (
     <Button
       variantColor="green"
@@ -29,12 +33,18 @@ const SubmitUpdates = ({
       onClick={async () => {
         if (isLoading) return;
         setIsLoading(true);
-        try {
-          await updateUserProfile(request, token);
-          onSubmit();
-        } catch (err) {
-          if (err.response.data && err.response.data.error) onError(err.response.data.error);
+        if (request.user) {
+          try {
+            await updateUserProfile(request, token);
+          } catch (err) {
+            if (err.response.data && err.response.data.error) error(err.response.data.error);
+          }
         }
+        if (request.query) {
+          await tryAuthenticatedApiQuery(EditDisplayedBadgesMutation, {username: request.query.username, badges: request.query.badges}, "put jwt token here")
+        }
+        onSubmit();
+
         setIsLoading(false);
       }}
     >

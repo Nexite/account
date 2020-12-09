@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Input from '@codeday/topo/Input/Text';
-import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
+import Input from '@codeday/topo/Atom/Input/Text';
+import FormControl, { Label, HelpText } from '../FormControl';
 
 const Username = ({ user, onChange }) => {
   const [username, setUsername] = useState(user.username);
